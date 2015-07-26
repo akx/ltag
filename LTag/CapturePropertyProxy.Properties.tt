@@ -1,0 +1,51 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+var props = @"
+AutoExposure
+Backlight
+Brightness
+Contrast
+Exposure
+Focus
+Fps
+FrameCount
+FrameHeight
+FrameWidth
+Gain
+Gamma
+Hue
+Iris
+IsoSpeed
+Mode
+Monochrome
+Pan
+Rectification
+Roll
+Staturation
+Settings
+Sharpness
+Temperature
+Tilt
+WhiteBalanceBlueU
+Zoom
+".Split('\n').Select((w) => w.Trim()).Where((w) => w.Length > 0).ToArray();
+#>
+
+using Emgu.CV.CvEnum;
+namespace LTag
+{
+	partial class CapturePropertyProxy
+	{
+<# foreach (var propName in props) { #>
+		public double <#= propName #> {
+			get { return GetValue(CapProp.<#= propName #>); }
+			set { SetValue(CapProp.<#= propName #>, value); }
+		}
+<# } #>
+	}
+}

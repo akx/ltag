@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace LTag
+namespace LTag.Track
 {
 	public class LaserTrackerResult: IDisposable
 	{
 		private Bitmap _threshBitmap;
 		private Bitmap _camBitmap;
 		private readonly List<Rectangle> _rectangles;
+		private readonly TimeSpan _processingTime;
 
 		public Bitmap ThreshBitmap
 		{
@@ -25,11 +26,17 @@ namespace LTag
 			get { return _camBitmap; }
 		}
 
-		public LaserTrackerResult(Bitmap camBitmap, Bitmap threshBitmap, List<Rectangle> rectangles)
+		public TimeSpan ProcessingTime
+		{
+			get { return _processingTime; }
+		}
+
+		public LaserTrackerResult(Bitmap camBitmap, Bitmap threshBitmap, List<Rectangle> rectangles, TimeSpan processingTime)
 		{
 			_camBitmap = camBitmap;
 			_threshBitmap = threshBitmap;
 			_rectangles = rectangles;
+			_processingTime = processingTime;
 		}
 
 		public void ApplyDebugToImage()
