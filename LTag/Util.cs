@@ -26,5 +26,22 @@ namespace LTag
 				rect.Y + rect.Height * 0.5f
 			);
 		}
+
+		public static float DistanceSqr(PointF p1, PointF p2)
+		{
+			var dx = (p1.X - p2.X);
+			var dy = (p1.Y - p2.Y);
+			return dx * dx + dy * dy;
+		}
+		
+		public static PointF LerpTo(this PointF p1, PointF p2, float val)
+		{
+			var iVal = 1f - val;
+			return new PointF(
+				p1.X * iVal + p2.X * val,
+				p1.Y * iVal + p2.Y * val
+			);
+		}
+
 	}
 }

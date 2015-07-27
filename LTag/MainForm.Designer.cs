@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -45,6 +46,10 @@
 			this.capturePropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.strokeTabPage = new System.Windows.Forms.TabPage();
 			this.strokePropertyGrid = new System.Windows.Forms.PropertyGrid();
+			this.drawingTab = new System.Windows.Forms.TabPage();
+			this.drawingPropertyGrid = new System.Windows.Forms.PropertyGrid();
+			this.clearButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStrip1.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
@@ -56,10 +61,13 @@
 			this.tableLayoutPanel1.SuspendLayout();
 			this.captureTab.SuspendLayout();
 			this.strokeTabPage.SuspendLayout();
+			this.drawingTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip1
 			// 
+			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearButton});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(864, 25);
@@ -131,6 +139,7 @@
 			this.tabControl1.Controls.Add(this.camTabPage);
 			this.tabControl1.Controls.Add(this.captureTab);
 			this.tabControl1.Controls.Add(this.strokeTabPage);
+			this.tabControl1.Controls.Add(this.drawingTab);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(3, 295);
 			this.tabControl1.Name = "tabControl1";
@@ -237,7 +246,7 @@
 			this.strokeTabPage.Padding = new System.Windows.Forms.Padding(3);
 			this.strokeTabPage.Size = new System.Drawing.Size(318, 261);
 			this.strokeTabPage.TabIndex = 3;
-			this.strokeTabPage.Text = "Stroke Recognition";
+			this.strokeTabPage.Text = "Stroke";
 			this.strokeTabPage.UseVisualStyleBackColor = true;
 			// 
 			// strokePropertyGrid
@@ -251,6 +260,38 @@
 			this.strokePropertyGrid.TabIndex = 20;
 			this.strokePropertyGrid.ToolbarVisible = false;
 			// 
+			// drawingTab
+			// 
+			this.drawingTab.Controls.Add(this.drawingPropertyGrid);
+			this.drawingTab.Location = new System.Drawing.Point(4, 22);
+			this.drawingTab.Name = "drawingTab";
+			this.drawingTab.Padding = new System.Windows.Forms.Padding(3);
+			this.drawingTab.Size = new System.Drawing.Size(318, 261);
+			this.drawingTab.TabIndex = 4;
+			this.drawingTab.Text = "Drawing";
+			this.drawingTab.UseVisualStyleBackColor = true;
+			// 
+			// drawingPropertyGrid
+			// 
+			this.drawingPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.drawingPropertyGrid.HelpVisible = false;
+			this.drawingPropertyGrid.Location = new System.Drawing.Point(3, 3);
+			this.drawingPropertyGrid.Name = "drawingPropertyGrid";
+			this.drawingPropertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+			this.drawingPropertyGrid.Size = new System.Drawing.Size(312, 255);
+			this.drawingPropertyGrid.TabIndex = 21;
+			this.drawingPropertyGrid.ToolbarVisible = false;
+			// 
+			// clearButton
+			// 
+			this.clearButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.clearButton.Image = ((System.Drawing.Image)(resources.GetObject("clearButton.Image")));
+			this.clearButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.clearButton.Name = "clearButton";
+			this.clearButton.Size = new System.Drawing.Size(85, 22);
+			this.clearButton.Text = "Clear Drawing";
+			this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,6 +303,8 @@
 			this.Name = "MainForm";
 			this.Text = "Laser Tag";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+			this.toolStrip1.ResumeLayout(false);
+			this.toolStrip1.PerformLayout();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
@@ -274,6 +317,7 @@
 			this.tableLayoutPanel1.PerformLayout();
 			this.captureTab.ResumeLayout(false);
 			this.strokeTabPage.ResumeLayout(false);
+			this.drawingTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -298,6 +342,9 @@
 		private System.Windows.Forms.PropertyGrid capturePropertyGrid;
 		private System.Windows.Forms.TabPage strokeTabPage;
 		private System.Windows.Forms.PropertyGrid strokePropertyGrid;
+		private System.Windows.Forms.TabPage drawingTab;
+		private System.Windows.Forms.PropertyGrid drawingPropertyGrid;
+		private System.Windows.Forms.ToolStripButton clearButton;
 
 
 	}

@@ -21,6 +21,8 @@ namespace LTag
 		private readonly LaserTracker _tracker = new LaserTracker();
 		private readonly StrokeRecognizer _strokeRecognizer = new StrokeRecognizer();
 		private Bitmap _debugImage;
+		private DrawWindow _drawWindow;
+		private Drawing _drawing = new Drawing();
 
 		public MainForm()
 		{
@@ -31,9 +33,29 @@ namespace LTag
 			_capture.ImageGrabbed += ProcessGrabbedImage;
 			captureCheckbox.Checked = true;
 			_capture.Start();
+			_drawWindow = new DrawWindow();
+			_drawWindow.Show(this);
+			_strokeRecognizer.OnStrokeUpdated += StrokeUpdated;
+			_strokeRecognizer.OnClearZoneHit += ClearZoneHit;
+			_drawWindow.Image = _drawing.Bitmap;
 			trackingPropertyGrid.SelectedObject = _tracker;
 			cameraPropertyGrid.SelectedObject = _capture;
 			strokePropertyGrid.SelectedObject = _strokeRecognizer;
+			drawingPropertyGrid.SelectedObject = _drawing;
+		}
+
+		private void ClearZoneHit(PointF point)
+		{
+			_drawing.Clear();
+		}
+
+		private void StrokeUpdated(Stroke.Stroke stroke, bool didFinish)
+		{
+			if (stroke.Points.Count <= 0) return;
+			var lastPoint = stroke.Points[stroke.Points.Count - 1];
+			var secondLastPoint = stroke.Points.Count >= 2 ? stroke.Points[stroke.Points.Count - 2] : lastPoint;
+			_drawing.Draw(secondLastPoint, lastPoint);
+			_drawWindow.RefreshSoon();
 		}
 
 		private void ProcessGrabbedImage(object sender, EventArgs e)
@@ -62,7 +84,7 @@ namespace LTag
 				{
 					_strokeRecognizer.UpdateNoPoint();
 				}
-
+				
 			}
 			var oldResult = Interlocked.Exchange(ref _lastResult, newResult);
 			if(oldResult != null) oldResult.Dispose();
@@ -149,6 +171,10 @@ namespace LTag
 			Util.Dispose(ref _capture);
 		}
 
-
+		private void clearButton_Click(object sender, EventArgs e)
+		{
+			_strokeRecognizer.EndCurrentStroke();
+			_drawing.Clear();
+		}
 	}
 }
