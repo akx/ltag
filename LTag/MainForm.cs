@@ -100,7 +100,6 @@ namespace LTag
 				if (_results.Count > 0)
 				{
 					result = _results.Dequeue();
-					Debug.Print("ql: {0}", _results.Count);
 				}
 			}
 			catch
