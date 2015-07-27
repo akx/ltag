@@ -159,7 +159,7 @@ namespace LTag.Track
 				_quad1.Rescale(_width, _height),
 				_quad2.Rescale(_width, _height),
 				_quad3.Rescale(_width, _height),
-				_quad4.Rescale(_width, _height),
+				_quad4.Rescale(_width, _height)
 			};
 			var destPoints = new[]
 			{

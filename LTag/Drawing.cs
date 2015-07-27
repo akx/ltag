@@ -123,7 +123,7 @@ namespace LTag
 			if (_bitmap == null) return;
 			point1 = point1.Rescale(_width, _height);
 			point2 = point2.Rescale(_width, _height);
-			float dst = (float)Math.Sqrt(Util.DistanceSqr(point1, point2));
+			var dst = Math.Sqrt(Util.DistanceSqr(point1, point2));
 			var nSteps = (int) Math.Ceiling(dst/_drawPxDist);
 			lock (_bitmap)
 			{

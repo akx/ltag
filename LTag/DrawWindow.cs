@@ -7,7 +7,7 @@ namespace LTag
 	public partial class DrawWindow : Form
 	{
 		public Bitmap Image { get; set; }
-		private Timer _refreshTimer = new Timer() { Interval = 1000 / 45, Enabled = true};
+		private readonly Timer _refreshTimer = new Timer { Interval = 1000 / 45, Enabled = true};
 		private bool _shouldRedraw;
 
 		public DrawWindow()

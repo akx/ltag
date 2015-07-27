@@ -5,13 +5,11 @@ namespace LTag
 {
 	static class Util
 	{
-		public static void Dispose<T>(ref T disposable) where T: IDisposable
+		public static void Dispose<T>(ref T disposable) where T: class, IDisposable
 		{
-			if (disposable != null)
-			{
-				disposable.Dispose();
-				disposable = default(T);
-			}
+			if (disposable == null) return;
+			disposable.Dispose();
+			disposable = default(T);
 		}
 
 		public static PointF Rescale(this PointF pt, float mulX, float mulY)

@@ -97,6 +97,7 @@ namespace LTag.Stroke
 		{
 			if (CheckClearZone(normalizedPoint)) return;
 			if (_currentStroke == null) BeginStroke();
+			if (_currentStroke == null) return; // Squelch null reference complaints.
 			if (_smoothing > 0)
 			{
 				if (_currentStroke.Points.Count > 0)

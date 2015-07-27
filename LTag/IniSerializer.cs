@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -34,7 +33,11 @@ namespace LTag
 			var typeConverterAttribute = prop.GetCustomAttributes(typeof (TypeConverterAttribute), true).FirstOrDefault() as TypeConverterAttribute;
 			if (typeConverterAttribute != null)
 			{
-				return Activator.CreateInstance(Type.GetType(typeConverterAttribute.ConverterTypeName)) as TypeConverter;
+				var converterType = Type.GetType(typeConverterAttribute.ConverterTypeName);
+				if (converterType != null)
+				{
+					return Activator.CreateInstance(converterType) as TypeConverter;
+				}
 			}
 			return TypeDescriptor.GetConverter(prop.PropertyType);
 		}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -17,16 +16,16 @@ namespace LTag
 {
 	public partial class MainForm : Form
 	{
-		private volatile Capture _capture;
+		private Capture _capture;
 		private CapturePropertyProxy _captureProps;		
 		private readonly LaserTracker _tracker = new LaserTracker();
 		private readonly StrokeRecognizer _strokeRecognizer = new StrokeRecognizer();
 		private Bitmap _debugImage;
-		private DrawWindow _drawWindow;
-		private Drawing _drawing = new Drawing();
-		private String _nextStatus = null;
-		private Queue<LaserTrackerResult> _results = new Queue<LaserTrackerResult>();
-		private Timer _uiUpdateTimer = new Timer() {Interval = 1000 / 25, Enabled = true};
+		private readonly DrawWindow _drawWindow;
+		private readonly Drawing _drawing = new Drawing();
+		private String _nextStatus;
+		private readonly Queue<LaserTrackerResult> _results = new Queue<LaserTrackerResult>();
+		private readonly Timer _uiUpdateTimer = new Timer {Interval = 1000 / 25, Enabled = true};
 
 		public MainForm()
 		{
@@ -157,7 +156,7 @@ namespace LTag
 				g.DrawRectangle(Pens.Orange, 0, 0, camBitmap.Width, camBitmap.Height);
 				if (!_tracker.Warp)
 				{
-					var points = (new[] {_tracker.Quad1, _tracker.Quad2, _tracker.Quad3, _tracker.Quad4, _tracker.Quad1}).Select((p) => p.Rescale(camBitmap.Width, camBitmap.Height)).ToArray();
+					var points = (new[] {_tracker.Quad1, _tracker.Quad2, _tracker.Quad3, _tracker.Quad4, _tracker.Quad1}).Select(p => p.Rescale(camBitmap.Width, camBitmap.Height)).ToArray();
 					g.DrawLines(Pens.Silver, points);
 				}
 				g.TranslateTransform(0, camBitmap.Height + 2);
