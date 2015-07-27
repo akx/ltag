@@ -175,6 +175,7 @@ namespace LTag
 		{
 			_strokeRecognizer.EndCurrentStroke();
 			_drawing.Clear();
+			_drawWindow.RefreshSoon();
 		}
 	}
 }
