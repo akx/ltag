@@ -49,7 +49,11 @@
 			this.drawingTab = new System.Windows.Forms.TabPage();
 			this.drawingPropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.clearButton = new System.Windows.Forms.ToolStripButton();
+			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.processingTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.cameraIndexUpDown = new System.Windows.Forms.NumericUpDown();
 			this.toolStrip1.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
@@ -62,6 +66,7 @@
 			this.captureTab.SuspendLayout();
 			this.strokeTabPage.SuspendLayout();
 			this.drawingTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.cameraIndexUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip1
@@ -76,6 +81,9 @@
 			// 
 			// statusStrip1
 			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel,
+            this.processingTimeLabel});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 610);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(864, 22);
@@ -174,32 +182,35 @@
 			this.camTabPage.Location = new System.Drawing.Point(4, 22);
 			this.camTabPage.Name = "camTabPage";
 			this.camTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.camTabPage.Size = new System.Drawing.Size(403, 263);
+			this.camTabPage.Size = new System.Drawing.Size(318, 261);
 			this.camTabPage.TabIndex = 1;
 			this.camTabPage.Text = "Camera";
 			this.camTabPage.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
 			this.tableLayoutPanel1.Controls.Add(this.captureCheckbox, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.cameraPropertyGrid, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.cameraIndexUpDown, 1, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(397, 257);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(312, 255);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// captureCheckbox
 			// 
 			this.captureCheckbox.AutoSize = true;
-			this.captureCheckbox.Location = new System.Drawing.Point(3, 237);
+			this.captureCheckbox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.captureCheckbox.Location = new System.Drawing.Point(3, 232);
 			this.captureCheckbox.Name = "captureCheckbox";
-			this.captureCheckbox.Size = new System.Drawing.Size(99, 17);
+			this.captureCheckbox.Size = new System.Drawing.Size(164, 20);
 			this.captureCheckbox.TabIndex = 19;
 			this.captureCheckbox.Text = "Enable Capture";
 			this.captureCheckbox.UseVisualStyleBackColor = true;
@@ -207,12 +218,13 @@
 			// 
 			// cameraPropertyGrid
 			// 
+			this.tableLayoutPanel1.SetColumnSpan(this.cameraPropertyGrid, 2);
 			this.cameraPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cameraPropertyGrid.HelpVisible = false;
 			this.cameraPropertyGrid.Location = new System.Drawing.Point(3, 3);
 			this.cameraPropertyGrid.Name = "cameraPropertyGrid";
 			this.cameraPropertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-			this.cameraPropertyGrid.Size = new System.Drawing.Size(391, 228);
+			this.cameraPropertyGrid.Size = new System.Drawing.Size(306, 223);
 			this.cameraPropertyGrid.TabIndex = 18;
 			this.cameraPropertyGrid.ToolbarVisible = false;
 			// 
@@ -222,7 +234,7 @@
 			this.captureTab.Location = new System.Drawing.Point(4, 22);
 			this.captureTab.Name = "captureTab";
 			this.captureTab.Padding = new System.Windows.Forms.Padding(3);
-			this.captureTab.Size = new System.Drawing.Size(403, 263);
+			this.captureTab.Size = new System.Drawing.Size(318, 261);
 			this.captureTab.TabIndex = 2;
 			this.captureTab.Text = "Capture Params";
 			this.captureTab.UseVisualStyleBackColor = true;
@@ -234,7 +246,7 @@
 			this.capturePropertyGrid.Location = new System.Drawing.Point(3, 3);
 			this.capturePropertyGrid.Name = "capturePropertyGrid";
 			this.capturePropertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-			this.capturePropertyGrid.Size = new System.Drawing.Size(397, 257);
+			this.capturePropertyGrid.Size = new System.Drawing.Size(312, 255);
 			this.capturePropertyGrid.TabIndex = 19;
 			this.capturePropertyGrid.ToolbarVisible = false;
 			// 
@@ -255,7 +267,6 @@
 			this.strokePropertyGrid.HelpVisible = false;
 			this.strokePropertyGrid.Location = new System.Drawing.Point(3, 3);
 			this.strokePropertyGrid.Name = "strokePropertyGrid";
-			this.strokePropertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
 			this.strokePropertyGrid.Size = new System.Drawing.Size(312, 255);
 			this.strokePropertyGrid.TabIndex = 20;
 			this.strokePropertyGrid.ToolbarVisible = false;
@@ -277,7 +288,6 @@
 			this.drawingPropertyGrid.HelpVisible = false;
 			this.drawingPropertyGrid.Location = new System.Drawing.Point(3, 3);
 			this.drawingPropertyGrid.Name = "drawingPropertyGrid";
-			this.drawingPropertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
 			this.drawingPropertyGrid.Size = new System.Drawing.Size(312, 255);
 			this.drawingPropertyGrid.TabIndex = 21;
 			this.drawingPropertyGrid.ToolbarVisible = false;
@@ -292,6 +302,29 @@
 			this.clearButton.Text = "Clear Drawing";
 			this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
 			// 
+			// statusLabel
+			// 
+			this.statusLabel.Name = "statusLabel";
+			this.statusLabel.Size = new System.Drawing.Size(837, 17);
+			this.statusLabel.Spring = true;
+			this.statusLabel.Text = "Hello :)";
+			this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// processingTimeLabel
+			// 
+			this.processingTimeLabel.Name = "processingTimeLabel";
+			this.processingTimeLabel.Size = new System.Drawing.Size(12, 17);
+			this.processingTimeLabel.Text = "x";
+			this.processingTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// cameraIndexUpDown
+			// 
+			this.cameraIndexUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cameraIndexUpDown.Location = new System.Drawing.Point(173, 232);
+			this.cameraIndexUpDown.Name = "cameraIndexUpDown";
+			this.cameraIndexUpDown.Size = new System.Drawing.Size(136, 20);
+			this.cameraIndexUpDown.TabIndex = 20;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,6 +338,8 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
@@ -318,6 +353,7 @@
 			this.captureTab.ResumeLayout(false);
 			this.strokeTabPage.ResumeLayout(false);
 			this.drawingTab.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.cameraIndexUpDown)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -345,6 +381,9 @@
 		private System.Windows.Forms.TabPage drawingTab;
 		private System.Windows.Forms.PropertyGrid drawingPropertyGrid;
 		private System.Windows.Forms.ToolStripButton clearButton;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+		private System.Windows.Forms.ToolStripStatusLabel processingTimeLabel;
+		private System.Windows.Forms.NumericUpDown cameraIndexUpDown;
 
 
 	}

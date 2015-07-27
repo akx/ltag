@@ -41,6 +41,7 @@ namespace LTag.Track
 
 		public void ApplyDebugToImage()
 		{
+			if (_threshBitmap == null) return;
 			using (var g = Graphics.FromImage(_threshBitmap))
 			{
 				foreach (var rectangle in _rectangles)

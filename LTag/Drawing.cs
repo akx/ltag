@@ -68,7 +68,7 @@ namespace LTag
 		private void RecreateBrush()
 		{
 			var bitmap = new Bitmap(_brushSize, _brushSize, PixelFormat.Format32bppArgb);
-			var center = new PointF(bitmap.Width / 2, bitmap.Height / 2);
+			var center = new PointF(bitmap.Width / 2f, bitmap.Height / 2f);
 			var sz = Math.Max(center.X, center.Y);
 			var maxAlpha = (int) Math.Round(_brushOpacity*255);
 			for(var y = 0; y < bitmap.Width; y++)
@@ -77,7 +77,7 @@ namespace LTag
 				{
 					var dst = Math.Sqrt(Util.DistanceSqr(new PointF(x, y), center));
 					dst = 1 - (dst/sz);
-					int alpha = Math.Min(Math.Max((int)(dst * maxAlpha), 0), maxAlpha);
+					var alpha = Math.Min(Math.Max((int)(dst * maxAlpha), 0), maxAlpha);
 					bitmap.SetPixel(x, y, Color.FromArgb(alpha, _brushColor));
 				}
 			}
