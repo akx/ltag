@@ -13,6 +13,7 @@ namespace LTag
 		private int _drawPxDist = 5;
 		private int _brushSize = 35;
 		private float _brushOpacity = 0.9f;
+		private float _brushBias = 1f;
 		private Color _brushColor = Color.White;
 		private Bitmap _bitmap;
 		private Bitmap _brushBitmap;
@@ -35,6 +36,13 @@ namespace LTag
 		{
 			get { return _brushOpacity; }
 			set { _brushOpacity = value; RecreateBrush(); }
+		}
+
+		[Category("Brush")]
+		public float BrushBias
+		{
+			get { return _brushBias; }
+			set { _brushBias = value; RecreateBrush(); }
 		}
 
 		[Category("Brush")]
@@ -77,6 +85,7 @@ namespace LTag
 				{
 					var dst = Math.Sqrt(Util.DistanceSqr(new PointF(x, y), center));
 					dst = 1 - (dst/sz);
+					dst = Math.Pow(dst, _brushBias);
 					var alpha = Math.Min(Math.Max((int)(dst * maxAlpha), 0), maxAlpha);
 					bitmap.SetPixel(x, y, Color.FromArgb(alpha, _brushColor));
 				}
