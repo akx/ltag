@@ -225,10 +225,8 @@ namespace LTag.Track
 			rects.Sort((r1, r2) =>
 			{
 				var s1 = r1.Width * r1.Height;
-				var s2 = r1.Width * r2.Height;
-				if (s1 > s2) return 1;
-				if (s1 < s2) return -1;
-				return 0;
+				var s2 = r2.Width * r2.Height;
+				return s1.CompareTo(s2);
 			});
 			return new LaserTrackerResult(camBitmap, threshBitmap, rects, _timer.Elapsed);
 		}
