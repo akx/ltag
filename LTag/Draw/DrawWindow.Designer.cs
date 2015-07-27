@@ -1,4 +1,4 @@
-﻿namespace LTag
+﻿namespace LTag.Draw
 {
 	partial class DrawWindow
 	{

@@ -30,6 +30,9 @@
 		{
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.clearButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.loadSettingsButton = new System.Windows.Forms.ToolStripButton();
+			this.saveSettingsButton = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.processingTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -51,9 +54,8 @@
 			this.strokePropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.drawingTab = new System.Windows.Forms.TabPage();
 			this.drawingPropertyGrid = new System.Windows.Forms.PropertyGrid();
-			this.saveSettingsButton = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.loadSettingsButton = new System.Windows.Forms.ToolStripButton();
+			this.drawWindowTab = new System.Windows.Forms.TabPage();
+			this.drawWindowPropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -69,6 +71,7 @@
 			this.captureTab.SuspendLayout();
 			this.strokeTabPage.SuspendLayout();
 			this.drawingTab.SuspendLayout();
+			this.drawWindowTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip1
@@ -93,6 +96,29 @@
 			this.clearButton.Size = new System.Drawing.Size(85, 22);
 			this.clearButton.Text = "Clear Drawing";
 			this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// loadSettingsButton
+			// 
+			this.loadSettingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.loadSettingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.loadSettingsButton.Name = "loadSettingsButton";
+			this.loadSettingsButton.Size = new System.Drawing.Size(82, 22);
+			this.loadSettingsButton.Text = "Load Settings";
+			this.loadSettingsButton.Click += new System.EventHandler(this.loadSettingsButton_Click);
+			// 
+			// saveSettingsButton
+			// 
+			this.saveSettingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.saveSettingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.saveSettingsButton.Name = "saveSettingsButton";
+			this.saveSettingsButton.Size = new System.Drawing.Size(80, 22);
+			this.saveSettingsButton.Text = "Save Settings";
+			this.saveSettingsButton.Click += new System.EventHandler(this.saveSettingsButton_Click);
 			// 
 			// statusStrip1
 			// 
@@ -178,6 +204,7 @@
 			this.tabControl1.Controls.Add(this.captureTab);
 			this.tabControl1.Controls.Add(this.strokeTabPage);
 			this.tabControl1.Controls.Add(this.drawingTab);
+			this.tabControl1.Controls.Add(this.drawWindowTab);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(3, 295);
 			this.tabControl1.Name = "tabControl1";
@@ -274,7 +301,7 @@
 			this.captureTab.Padding = new System.Windows.Forms.Padding(3);
 			this.captureTab.Size = new System.Drawing.Size(318, 261);
 			this.captureTab.TabIndex = 2;
-			this.captureTab.Text = "Capture Params";
+			this.captureTab.Text = "Capture";
 			this.captureTab.UseVisualStyleBackColor = true;
 			// 
 			// capturePropertyGrid
@@ -330,28 +357,26 @@
 			this.drawingPropertyGrid.TabIndex = 21;
 			this.drawingPropertyGrid.ToolbarVisible = false;
 			// 
-			// saveSettingsButton
+			// drawWindowTab
 			// 
-			this.saveSettingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.saveSettingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.saveSettingsButton.Name = "saveSettingsButton";
-			this.saveSettingsButton.Size = new System.Drawing.Size(80, 22);
-			this.saveSettingsButton.Text = "Save Settings";
-			this.saveSettingsButton.Click += new System.EventHandler(this.saveSettingsButton_Click);
+			this.drawWindowTab.Controls.Add(this.drawWindowPropertyGrid);
+			this.drawWindowTab.Location = new System.Drawing.Point(4, 22);
+			this.drawWindowTab.Name = "drawWindowTab";
+			this.drawWindowTab.Padding = new System.Windows.Forms.Padding(3);
+			this.drawWindowTab.Size = new System.Drawing.Size(318, 261);
+			this.drawWindowTab.TabIndex = 5;
+			this.drawWindowTab.Text = "Output";
+			this.drawWindowTab.UseVisualStyleBackColor = true;
 			// 
-			// toolStripSeparator1
+			// drawWindowPropertyGrid
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// loadSettingsButton
-			// 
-			this.loadSettingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.loadSettingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.loadSettingsButton.Name = "loadSettingsButton";
-			this.loadSettingsButton.Size = new System.Drawing.Size(82, 22);
-			this.loadSettingsButton.Text = "Load Settings";
-			this.loadSettingsButton.Click += new System.EventHandler(this.loadSettingsButton_Click);
+			this.drawWindowPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.drawWindowPropertyGrid.HelpVisible = false;
+			this.drawWindowPropertyGrid.Location = new System.Drawing.Point(3, 3);
+			this.drawWindowPropertyGrid.Name = "drawWindowPropertyGrid";
+			this.drawWindowPropertyGrid.Size = new System.Drawing.Size(312, 255);
+			this.drawWindowPropertyGrid.TabIndex = 22;
+			this.drawWindowPropertyGrid.ToolbarVisible = false;
 			// 
 			// MainForm
 			// 
@@ -382,6 +407,7 @@
 			this.captureTab.ResumeLayout(false);
 			this.strokeTabPage.ResumeLayout(false);
 			this.drawingTab.ResumeLayout(false);
+			this.drawWindowTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -415,6 +441,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton saveSettingsButton;
 		private System.Windows.Forms.ToolStripButton loadSettingsButton;
+		private System.Windows.Forms.TabPage drawWindowTab;
+		private System.Windows.Forms.PropertyGrid drawWindowPropertyGrid;
 
 
 	}

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Emgu.CV;
+using LTag.Draw;
 using LTag.Stroke;
 using LTag.Track;
 using Timer = System.Windows.Forms.Timer;
@@ -37,10 +38,12 @@ namespace LTag
 			_strokeRecognizer.OnClearZoneHit += ClearZoneHit;
 			_drawing.OnBitmapChanged += () => { _drawWindow.Image = _drawing.Bitmap; };
 			_drawing.RecreateBitmap();
+			drawWindowPropertyGrid.PropertyValueChanged += (o, args) => _drawWindow.RefreshSoon();
 			UpdatePropertyGrids();
 			captureCheckbox.Checked = true;
 			StartOrStopCapture(captureCheckbox.Checked);
 			_uiUpdateTimer.Tick += (sender, args) => UpdateUI();
+			
 		}
 
 		private void UpdatePropertyGrids()
@@ -48,7 +51,7 @@ namespace LTag
 			trackingPropertyGrid.SelectedObject = _tracker;
 			strokePropertyGrid.SelectedObject = _strokeRecognizer;
 			drawingPropertyGrid.SelectedObject = _drawing;
-			
+			drawWindowPropertyGrid.SelectedObject = _drawWindow.DrawParams;
 		}
 
 		private void ClearZoneHit(PointF point)
@@ -232,6 +235,7 @@ namespace LTag
 			iser.WriteObject("Tracker", _tracker);
 			iser.WriteObject("StrokeRecognizer", _strokeRecognizer);
 			iser.WriteObject("Drawing", _drawing);
+			iser.WriteObject("DrawParams", _drawWindow.DrawParams);
 			var path = GetIniPath();
 			using (var tw = new StreamWriter(path, false, Encoding.UTF8))
 			{
@@ -256,6 +260,7 @@ namespace LTag
 				iser.UpdateObject("Tracker", _tracker);
 				iser.UpdateObject("StrokeRecognizer", _strokeRecognizer);
 				iser.UpdateObject("Drawing", _drawing);
+				iser.UpdateObject("DrawParams", _drawWindow.DrawParams);
 				UpdatePropertyGrids();
 				SetStatus("Loaded from " + path);
 			}

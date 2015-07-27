@@ -55,11 +55,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CapturePropertyProxy.Properties.tt</DependentUpon>
     </Compile>
-    <Compile Include="Drawing.cs" />
-    <Compile Include="DrawWindow.cs">
+    <Compile Include="Draw\Drawing.cs" />
+    <Compile Include="Draw\DrawParams.cs" />
+    <Compile Include="Draw\DrawWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DrawWindow.Designer.cs">
+    <Compile Include="Draw\DrawWindow.Designer.cs">
       <DependentUpon>DrawWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="IniSerializer.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="Track\LaserTracker.cs" />
     <Compile Include="Track\LaserTrackerResult.cs" />
     <Compile Include="Util.cs" />
-    <EmbeddedResource Include="DrawWindow.resx">
+    <EmbeddedResource Include="Draw\DrawWindow.resx">
       <DependentUpon>DrawWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

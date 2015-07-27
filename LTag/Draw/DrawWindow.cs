@@ -2,13 +2,19 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace LTag
+namespace LTag.Draw
 {
 	public partial class DrawWindow : Form
 	{
 		public Bitmap Image { get; set; }
 		private readonly Timer _refreshTimer = new Timer { Interval = 1000 / 45, Enabled = true};
 		private bool _shouldRedraw;
+		private readonly DrawParams _drawParams = new DrawParams();
+
+		public DrawParams DrawParams
+		{
+			get { return _drawParams; }
+		}
 
 		public DrawWindow()
 		{
@@ -53,6 +59,7 @@ namespace LTag
 			if (Image == null) return;
 			lock (Image)
 			{
+				_drawParams.Apply(g, Width, Height);
 				g.DrawImage(Image, 0, 0, Width, Height);
 			}
 		}
