@@ -6,8 +6,12 @@ using System.Drawing.Imaging;
 
 namespace LTag
 {
-	class Drawing
+	public class Drawing
 	{
+		public delegate void BitmapChangedDelegate();
+
+		public event BitmapChangedDelegate OnBitmapChanged;
+
 		private int _width = 1024;
 		private int _height = 768;
 		private int _drawPxDist = 5;
@@ -94,7 +98,7 @@ namespace LTag
 			_brushBitmap = bitmap;
 		}
 
-		private void RecreateBitmap()
+		public void RecreateBitmap()
 		{
 			var newBitmap = new Bitmap(_width, _height, PixelFormat.Format32bppArgb);
 			using (var g = Graphics.FromImage(newBitmap))
@@ -105,6 +109,7 @@ namespace LTag
 			}
 			Util.Dispose(ref _bitmap);
 			_bitmap = newBitmap;
+			if (OnBitmapChanged != null) OnBitmapChanged();
 		}
 
 		public Drawing()

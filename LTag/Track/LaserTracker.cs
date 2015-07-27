@@ -10,7 +10,7 @@ using Emgu.CV.Util;
 
 namespace LTag.Track
 {
-	class LaserTracker
+	public class LaserTracker
 	{
 		private int _hueCenter = 40;
 		private int _hueWidth = 10;

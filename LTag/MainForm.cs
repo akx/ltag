@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -17,7 +18,7 @@ namespace LTag
 	public partial class MainForm : Form
 	{
 		private volatile Capture _capture;
-		private CapturePropertyProxy _captureProps;
+		private CapturePropertyProxy _captureProps;		
 		private readonly LaserTracker _tracker = new LaserTracker();
 		private readonly StrokeRecognizer _strokeRecognizer = new StrokeRecognizer();
 		private Bitmap _debugImage;
@@ -35,13 +36,20 @@ namespace LTag
 			_drawWindow.Show(this);
 			_strokeRecognizer.OnStrokeUpdated += StrokeUpdated;
 			_strokeRecognizer.OnClearZoneHit += ClearZoneHit;
-			_drawWindow.Image = _drawing.Bitmap;
-			trackingPropertyGrid.SelectedObject = _tracker;
-			strokePropertyGrid.SelectedObject = _strokeRecognizer;
-			drawingPropertyGrid.SelectedObject = _drawing;
+			_drawing.OnBitmapChanged += () => { _drawWindow.Image = _drawing.Bitmap; };
+			_drawing.RecreateBitmap();
+			UpdatePropertyGrids();
 			captureCheckbox.Checked = true;
 			StartOrStopCapture(captureCheckbox.Checked);
 			_uiUpdateTimer.Tick += (sender, args) => UpdateUI();
+		}
+
+		private void UpdatePropertyGrids()
+		{
+			trackingPropertyGrid.SelectedObject = _tracker;
+			strokePropertyGrid.SelectedObject = _strokeRecognizer;
+			drawingPropertyGrid.SelectedObject = _drawing;
+			
 		}
 
 		private void ClearZoneHit(PointF point)
@@ -213,6 +221,45 @@ namespace LTag
 		private void SetStatus(string status)
 		{
 			_nextStatus = status;
+		}
+
+		private static String GetIniPath()
+		{
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ltag.ini");
+		}
+		private void saveSettingsButton_Click(object sender, EventArgs e)
+		{
+			var iser = new IniSerializer();
+			iser.WriteObject("Tracker", _tracker);
+			iser.WriteObject("StrokeRecognizer", _strokeRecognizer);
+			iser.WriteObject("Drawing", _drawing);
+			var path = GetIniPath();
+			using (var tw = new StreamWriter(path, false, Encoding.UTF8))
+			{
+				tw.Write(iser.GetValue());
+			}
+			SetStatus("Saved to " + path);
+		}
+
+
+		private void loadSettingsButton_Click(object sender, EventArgs e)
+		{
+			var path = GetIniPath();
+			if (!File.Exists(path))
+			{
+				SetStatus("No INI file at " + path);
+				return;
+			}
+			var iser = new IniSerializer();
+			using (var tw = new StreamReader(path, Encoding.UTF8))
+			{
+				iser.Parse(tw.ReadToEnd());
+				iser.UpdateObject("Tracker", _tracker);
+				iser.UpdateObject("StrokeRecognizer", _strokeRecognizer);
+				iser.UpdateObject("Drawing", _drawing);
+				UpdatePropertyGrids();
+				SetStatus("Loaded from " + path);
+			}
 		}
 	}
 }

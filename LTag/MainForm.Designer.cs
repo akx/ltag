@@ -28,9 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.clearButton = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.processingTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.debugPictureBox = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -42,16 +44,16 @@
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.captureCheckbox = new System.Windows.Forms.CheckBox();
 			this.cameraPropertyGrid = new System.Windows.Forms.PropertyGrid();
+			this.cameraIndexUpDown = new System.Windows.Forms.NumericUpDown();
 			this.captureTab = new System.Windows.Forms.TabPage();
 			this.capturePropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.strokeTabPage = new System.Windows.Forms.TabPage();
 			this.strokePropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.drawingTab = new System.Windows.Forms.TabPage();
 			this.drawingPropertyGrid = new System.Windows.Forms.PropertyGrid();
-			this.clearButton = new System.Windows.Forms.ToolStripButton();
-			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.processingTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.cameraIndexUpDown = new System.Windows.Forms.NumericUpDown();
+			this.saveSettingsButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.loadSettingsButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -63,21 +65,34 @@
 			this.trackingTabPage.SuspendLayout();
 			this.camTabPage.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.cameraIndexUpDown)).BeginInit();
 			this.captureTab.SuspendLayout();
 			this.strokeTabPage.SuspendLayout();
 			this.drawingTab.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.cameraIndexUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip1
 			// 
+			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearButton});
+            this.clearButton,
+            this.toolStripSeparator1,
+            this.loadSettingsButton,
+            this.saveSettingsButton});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(864, 25);
 			this.toolStrip1.TabIndex = 7;
 			this.toolStrip1.Text = "toolStrip1";
+			// 
+			// clearButton
+			// 
+			this.clearButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.clearButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.clearButton.Name = "clearButton";
+			this.clearButton.Size = new System.Drawing.Size(85, 22);
+			this.clearButton.Text = "Clear Drawing";
+			this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
 			// 
 			// statusStrip1
 			// 
@@ -89,6 +104,21 @@
 			this.statusStrip1.Size = new System.Drawing.Size(864, 22);
 			this.statusStrip1.TabIndex = 8;
 			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// statusLabel
+			// 
+			this.statusLabel.Name = "statusLabel";
+			this.statusLabel.Size = new System.Drawing.Size(837, 17);
+			this.statusLabel.Spring = true;
+			this.statusLabel.Text = "Hello :)";
+			this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// processingTimeLabel
+			// 
+			this.processingTimeLabel.Name = "processingTimeLabel";
+			this.processingTimeLabel.Size = new System.Drawing.Size(12, 17);
+			this.processingTimeLabel.Text = "x";
+			this.processingTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// splitContainer1
 			// 
@@ -228,6 +258,14 @@
 			this.cameraPropertyGrid.TabIndex = 18;
 			this.cameraPropertyGrid.ToolbarVisible = false;
 			// 
+			// cameraIndexUpDown
+			// 
+			this.cameraIndexUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cameraIndexUpDown.Location = new System.Drawing.Point(173, 232);
+			this.cameraIndexUpDown.Name = "cameraIndexUpDown";
+			this.cameraIndexUpDown.Size = new System.Drawing.Size(136, 20);
+			this.cameraIndexUpDown.TabIndex = 20;
+			// 
 			// captureTab
 			// 
 			this.captureTab.Controls.Add(this.capturePropertyGrid);
@@ -292,38 +330,28 @@
 			this.drawingPropertyGrid.TabIndex = 21;
 			this.drawingPropertyGrid.ToolbarVisible = false;
 			// 
-			// clearButton
+			// saveSettingsButton
 			// 
-			this.clearButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.clearButton.Image = ((System.Drawing.Image)(resources.GetObject("clearButton.Image")));
-			this.clearButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.clearButton.Name = "clearButton";
-			this.clearButton.Size = new System.Drawing.Size(85, 22);
-			this.clearButton.Text = "Clear Drawing";
-			this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+			this.saveSettingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.saveSettingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.saveSettingsButton.Name = "saveSettingsButton";
+			this.saveSettingsButton.Size = new System.Drawing.Size(80, 22);
+			this.saveSettingsButton.Text = "Save Settings";
+			this.saveSettingsButton.Click += new System.EventHandler(this.saveSettingsButton_Click);
 			// 
-			// statusLabel
+			// toolStripSeparator1
 			// 
-			this.statusLabel.Name = "statusLabel";
-			this.statusLabel.Size = new System.Drawing.Size(837, 17);
-			this.statusLabel.Spring = true;
-			this.statusLabel.Text = "Hello :)";
-			this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// processingTimeLabel
+			// loadSettingsButton
 			// 
-			this.processingTimeLabel.Name = "processingTimeLabel";
-			this.processingTimeLabel.Size = new System.Drawing.Size(12, 17);
-			this.processingTimeLabel.Text = "x";
-			this.processingTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// cameraIndexUpDown
-			// 
-			this.cameraIndexUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.cameraIndexUpDown.Location = new System.Drawing.Point(173, 232);
-			this.cameraIndexUpDown.Name = "cameraIndexUpDown";
-			this.cameraIndexUpDown.Size = new System.Drawing.Size(136, 20);
-			this.cameraIndexUpDown.TabIndex = 20;
+			this.loadSettingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.loadSettingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.loadSettingsButton.Name = "loadSettingsButton";
+			this.loadSettingsButton.Size = new System.Drawing.Size(82, 22);
+			this.loadSettingsButton.Text = "Load Settings";
+			this.loadSettingsButton.Click += new System.EventHandler(this.loadSettingsButton_Click);
 			// 
 			// MainForm
 			// 
@@ -350,10 +378,10 @@
 			this.camTabPage.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.cameraIndexUpDown)).EndInit();
 			this.captureTab.ResumeLayout(false);
 			this.strokeTabPage.ResumeLayout(false);
 			this.drawingTab.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.cameraIndexUpDown)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -384,6 +412,9 @@
 		private System.Windows.Forms.ToolStripStatusLabel statusLabel;
 		private System.Windows.Forms.ToolStripStatusLabel processingTimeLabel;
 		private System.Windows.Forms.NumericUpDown cameraIndexUpDown;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton saveSettingsButton;
+		private System.Windows.Forms.ToolStripButton loadSettingsButton;
 
 
 	}

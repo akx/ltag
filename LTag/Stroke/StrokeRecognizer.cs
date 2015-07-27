@@ -4,9 +4,10 @@ using System.Drawing;
 
 namespace LTag.Stroke
 {
-	internal delegate void StrokeUpdatedDelegate(Stroke stroke, bool didFinish);
-	internal delegate void ClearZoneHitDelegate(PointF point);
-	class StrokeRecognizer
+	public delegate void StrokeUpdatedDelegate(Stroke stroke, bool didFinish);
+	public delegate void ClearZoneHitDelegate(PointF point);
+	
+	public class StrokeRecognizer
 	{
 		public event StrokeUpdatedDelegate OnStrokeUpdated;
 		public event ClearZoneHitDelegate OnClearZoneHit;
@@ -37,6 +38,7 @@ namespace LTag.Stroke
 		}
 
 		[Category("Clear Zone")]
+		[TypeConverter(typeof(PointFConverter))]
 		public PointF ClearZonePoint1
 		{
 			get { return _clearZonePoint1; }
@@ -44,6 +46,7 @@ namespace LTag.Stroke
 		}
 
 		[Category("Clear Zone")]
+		[TypeConverter(typeof(PointFConverter))]
 		public PointF ClearZonePoint2
 		{
 			get { return _clearZonePoint2; }

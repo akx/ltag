@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace LTag.Stroke
 {
-	class Stroke
+	public class Stroke
 	{
 		private readonly List<PointF> _points = new List<PointF>();
 
