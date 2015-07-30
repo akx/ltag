@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Net.Sockets;
 using System.Threading;
 using LTag.OSC;
 
@@ -12,10 +11,10 @@ namespace LTag.Track
 {
 	public delegate void TuioPointReceived(bool hasPoint, PointF coords);
 
-	class TuioReceiver: IDisposable
+	internal class TuioReceiver : IDisposable
 	{
 		private OSCReceiver _oscReceiver = new OSCReceiver(3333);
-		private BackgroundWorker _worker = new BackgroundWorker { WorkerSupportsCancellation = true };
+		private BackgroundWorker _worker = new BackgroundWorker {WorkerSupportsCancellation = true};
 		private bool _enabled = false;
 		private int _currentPointerId = 0;
 		private PointF _lastPoint = new PointF();
@@ -30,10 +29,16 @@ namespace LTag.Track
 		{
 			while (!_worker.CancellationPending)
 			{
-				if(!_enabled) Thread.Sleep(100);
-				var packet = _oscReceiver.Receive();
-				if (packet == null) continue;
-				HandlePacket(packet);
+				if (!_enabled) Thread.Sleep(100);
+				try
+				{
+					var packet = _oscReceiver.Receive();
+					if (packet == null) continue;
+					HandlePacket(packet);
+				}
+				catch (SocketException)
+				{
+				}
 			}
 		}
 
@@ -84,7 +89,6 @@ namespace LTag.Track
 					//Debug.Print("{0} {1}", msg.Address, msg);
 					break;
 			}
-			
 		}
 
 		private void DispatchCurrentPoint()
@@ -101,7 +105,7 @@ namespace LTag.Track
 			if (enabled)
 			{
 				_oscReceiver.Connect();
-				if(!_worker.IsBusy) _worker.RunWorkerAsync();
+				if (!_worker.IsBusy) _worker.RunWorkerAsync();
 			}
 			else
 			{

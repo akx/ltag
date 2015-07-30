@@ -48,8 +48,7 @@ namespace LTag.OSC
 		public void Connect()
 		{
 			Close();
-			udpClient = new UdpClient(localPort);
-			udpClient.Client.ReceiveTimeout = 5000;
+			udpClient = new UdpClient(localPort) {Client = {ReceiveTimeout = 5000}};
 		}
 
 		public void Close()
