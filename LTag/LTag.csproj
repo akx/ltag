@@ -70,6 +70,13 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OSC\OSCBundle.cs" />
+    <Compile Include="OSC\OSCMessage.cs" />
+    <Compile Include="OSC\OSCPacket.cs" />
+    <Compile Include="OSC\OSCReceiver.cs" />
+    <Compile Include="OSC\OSCTimeTag.cs" />
+    <Compile Include="OSC\OSCTransmitter.cs" />
+    <Compile Include="OSC\Utils.cs" />
     <Compile Include="PointFConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +84,7 @@
     <Compile Include="Stroke\StrokeRecognizer.cs" />
     <Compile Include="Track\LaserTracker.cs" />
     <Compile Include="Track\LaserTrackerResult.cs" />
+    <Compile Include="Track\TuioReceiver.cs" />
     <Compile Include="Util.cs" />
     <EmbeddedResource Include="Draw\DrawWindow.resx">
       <DependentUpon>DrawWindow.cs</DependentUpon>

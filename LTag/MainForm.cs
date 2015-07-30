@@ -19,6 +19,7 @@ namespace LTag
 	{
 		private Capture _capture;
 		private CapturePropertyProxy _captureProps;		
+		private TuioReceiver _tuioReceiver = new TuioReceiver();
 		private readonly LaserTracker _tracker = new LaserTracker();
 		private readonly StrokeRecognizer _strokeRecognizer = new StrokeRecognizer();
 		private Bitmap _debugImage;
@@ -40,7 +41,9 @@ namespace LTag
 			_drawing.RecreateBitmap();
 			drawWindowPropertyGrid.PropertyValueChanged += (o, args) => _drawWindow.RefreshSoon();
 			UpdatePropertyGrids();
-			captureCheckbox.Checked = true;
+			_tuioReceiver.PointReceived += TuioReceiverOnPointReceived;
+			tuioCheckbox.Checked = true;
+			TuioChanged(null, null);
 			StartOrStopCapture(captureCheckbox.Checked);
 			_uiUpdateTimer.Tick += (sender, args) => UpdateUI();
 			
@@ -48,10 +51,15 @@ namespace LTag
 
 		private void UpdatePropertyGrids()
 		{
+			cameraPropertyGrid.SelectedObject = _capture;
+			capturePropertyGrid.SelectedObject = _captureProps;
+			
 			trackingPropertyGrid.SelectedObject = _tracker;
 			strokePropertyGrid.SelectedObject = _strokeRecognizer;
 			drawingPropertyGrid.SelectedObject = _drawing;
 			drawWindowPropertyGrid.SelectedObject = _drawWindow.DrawParams;
+			cameraPropertyGrid.Enabled = (cameraPropertyGrid.SelectedObject != null);
+			capturePropertyGrid.Enabled = (capturePropertyGrid.SelectedObject != null);
 		}
 
 		private void ClearZoneHit(PointF point)
@@ -78,6 +86,20 @@ namespace LTag
 				ProcessFrameFromQueue(frame);
 			}
 		}
+
+
+		private void TuioReceiverOnPointReceived(bool hasPoint, PointF coords)
+		{
+			if (hasPoint)
+			{
+				_strokeRecognizer.UpdateWithPoint(coords);
+			}
+			else
+			{
+				_strokeRecognizer.UpdateNoPoint();
+			}
+		}
+
 
 		private void ProcessFrameFromQueue(Mat frame)
 		{
@@ -107,8 +129,9 @@ namespace LTag
 			LaserTrackerResult result = null;
 			try
 			{
-				if (_results.Count > 0)
+				while (_results.Count > 0)
 				{
+					Util.Dispose(ref result);
 					result = _results.Dequeue();
 				}
 			}
@@ -194,21 +217,21 @@ namespace LTag
 				_capture = new Capture((int) cameraIndexUpDown.Value);
 				_captureProps = new CapturePropertyProxy(_capture);
 				_capture.ImageGrabbed += ProcessGrabbedImage;
-				cameraPropertyGrid.SelectedObject = _capture;
-				capturePropertyGrid.SelectedObject = null;
 				_capture.Start();
 				SetStatus("Capture started.");
 			}
 			else
 			{
-				_capture.Stop();
+				if(_capture != null) _capture.Stop();
 				Util.Dispose(ref _capture);
 				SetStatus("Capture stopped.");
 			}
+			UpdatePropertyGrids();
 		}
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			Util.Dispose(ref _tuioReceiver);
 			Util.Dispose(ref _capture);
 		}
 
@@ -264,6 +287,12 @@ namespace LTag
 				UpdatePropertyGrids();
 				SetStatus("Loaded from " + path);
 			}
+		}
+
+		private void TuioChanged(object sender, EventArgs e)
+		{
+			_tuioReceiver.SetEnabled(tuioCheckbox.Checked);
+
 		}
 	}
 }
